@@ -27,6 +27,12 @@ const bookSchema = new Schema({
         index: true
     },
     keyword: [String],
+    status: {
+        type: String,
+        enum: ["free", "booked", "sold"],
+        required: true,
+        default: "free"
+    },
     user: {
         type: mongoose.Schema.ObjectId,
         ref: 'User',

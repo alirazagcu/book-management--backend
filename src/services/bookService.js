@@ -8,6 +8,14 @@ class BookService {
     async searchByField(data) {
         return await bookDAO.searchByField(data);
     }
+
+    async deleteBook(data) {
+        return await bookDAO.deleteBook(data);
+    }
+
+    async updateBookStatus(data) {
+        return await bookDAO.updateBookStatus(data);
+    }
 }
 
 module.exports = BookService;

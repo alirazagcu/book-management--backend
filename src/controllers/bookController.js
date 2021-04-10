@@ -35,5 +35,25 @@ module.exports = {
         } catch (e) {
             next(e);
         }
+    },
+
+    deleteBook: async (req, res, next) => {
+        try {
+            requestValidator.deleteBook(req.body);
+            let response = await bookService.deleteBook(req.body);
+            return res.json({success: true, response: "successfully deleted book"});
+        } catch (e) {
+            next(e);
+        }
+    },
+
+    updateBookStatus: async (req, res, next) => {
+        try {
+            requestValidator.updateBookStatus(req.body);
+            let response = await bookService.updateBookStatus(req.body);
+            return res.json({success: true, response: "Successfully updated"})
+        } catch (e) {
+            next(e);
+        }
     }
 }
