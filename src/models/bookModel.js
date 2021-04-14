@@ -37,6 +37,11 @@ const bookSchema = new Schema({
         type: mongoose.Schema.ObjectId,
         ref: 'User',
         required: [true, 'Book must belong to seller']
+    },
+    status: {
+        type: String,
+        required: true,
+        default: 'new'
     }
 }, {
     timestamps: {

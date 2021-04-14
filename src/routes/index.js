@@ -10,4 +10,6 @@ router.use('/user', require('./user'));
 //api/v1/book
 router.use('/book', require('./book'));
 
+//api/v1/booking
+router.use('/booking', require('./booking'));
 module.exports = router;  
