@@ -12,4 +12,7 @@ router.use('/book', require('./book'));
 
 //api/v1/booking
 router.use('/booking', require('./booking'));
+
+//api/v1/notification
+router.use('/notification', require('./notification'));
 module.exports = router;  

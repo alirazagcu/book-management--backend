@@ -45,10 +45,10 @@ module.exports = {
         throwError(400, "Required data input", requiredData);
       }
       let validationError = [];
-      if(!['free', 'booked', 'sold'].includes(data['status'])){
+      if(!['new', 'booked', 'sold'].includes(data['status'])){
         validationError.push({
           key: 'status',
-          msg: "status must be any of these, [free, booked, sold]"
+          msg: "status must be any of these, [new, booked, sold]"
         })
       }
       

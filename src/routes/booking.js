@@ -1,8 +1,14 @@
 const { authenticate, authorize } = require('../controllers/AuthController');
-const { createBooking } = require('../controllers/BookingController');
+const { createBooking, getAllBookingsByUser, getBooking, updateBookingStatus } = require('../controllers/BookingController');
 
 const router = require('express').Router();
 
 router.post('/createBooking', authenticate, authorize("buyer"), createBooking)
+
+router.post('/getAllBookingsByUser', authenticate, authorize("all"), getAllBookingsByUser);
+
+router.post('/getBooking', authenticate, authorize("all"), getBooking)
+
+router.post('/updateBookingStatus', authenticate, authorize("seller"), updateBookingStatus)
 
 module.exports = router;

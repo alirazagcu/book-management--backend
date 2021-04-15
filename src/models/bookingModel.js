@@ -24,6 +24,12 @@ const bookingSchema = new Schema({
     address: {
         type: String,
         required: [true, 'Address must be provided']
+    },
+    status: {
+        type: String,
+        enum: ['new', "booked", "sold"],
+        required: [true, 'Status must be provided'],
+        default: 'new'
     }
     
 },{ timestamps: {
@@ -34,4 +40,12 @@ const bookingSchema = new Schema({
     toObject: { virtuals: true }
   }
 )
+
+bookingSchema.pre(/^find/, function(next){
+    this.populate({
+      path : `buyer_id`,
+      select : ['first_name', 'last_name']
+  })
+  next()
+  })
 module.exports = mongoose.model('Booking', bookingSchema);

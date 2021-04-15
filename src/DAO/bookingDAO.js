@@ -2,7 +2,10 @@ const Booking = require('../models/bookingModel');
 const Book = require('../models/bookModel');
 const User = require('../models/userModel');
 const { throwError } = require('../utils/Common')
+const NotificationDAO = require('../DAO/notificationDAO');
+const notificationDAO = new NotificationDAO();
 class BookingDAO {
+
     async createBooking(data) {
         let book = await Book.findById(data['book_id']);
         if (!book) throwError(404, "Book data not found");
@@ -14,13 +17,58 @@ class BookingDAO {
         let bookingData = {
             book_id: data['book_id'],
             buyer_id: data['buyer_id'],
-            seller_id: book.user,
+            seller_id: seller._id,
             number: data['phone_number'],
             address: data['address'],
-            status: 'new'
+            status: 'booked'
         }
         let [booking, _] = await Promise.all([Booking.create(bookingData), Book.findByIdAndUpdate({_id: book._id}, {status: "Booked"}) ]);
+        let notificationData = {
+            booking_id: booking._id,
+            user_id: seller._id,
+            status: 'active',
+            message: `Your book ${book.title} is booked by ${buyer.first_name} ${buyer.last_name} and go to book tracking page to update the book status`
+        }
+        await notificationDAO.createNotification(notificationData)
         return booking._id;
+    }
+
+    async getAllBookingsByUser(data) {
+        let user = await User.findById(data._user.id);
+        if (!user) throwError(404, "User not found");
+        const bookings = await Booking.find({seller_id: data._user.id}).where({status: 'booked'});    
+        return  bookings.map(book => {
+            return { 
+                id: book._id,
+                buyerName: book.buyer_id.first_name+ " "+ book.buyer_id.last_name,
+                number: book.number,
+                address: book.address,
+                status: book.status
+            }
+        })
+    }
+
+    async getBooking(data) {
+        let user = await User.findById(data._user.id);
+        if (!user) throwError(404, "User not found");
+        let booking = await Booking.findById(data['booking_id']);
+        if (!booking) throwError(404, "Booking not found");
+        return {
+            id: booking._id,
+            buyerName: booking.buyer_id.first_name+ " "+ booking.buyer_id.last_name,
+            address: booking.address,
+            number: booking.number,
+            status: booking.status
+        }
+    }
+
+    async updateBookingStatus(data) {
+        let user = await User.findById(data._user.id);
+        if (!user) throwError(404, "User not found");
+        let booking = await Booking.findByIdAndUpdate(data['booking_id']);
+        if (!booking) throwError(404, "Booking not found");
+        await Booking.updateOne({status:data['status']});
+        await Book.findByIdAndUpdate(booking.book_id, {status: data['status']})
     }
 }
 module.exports = BookingDAO;
