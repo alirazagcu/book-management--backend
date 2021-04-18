@@ -6,6 +6,7 @@ module.exports = {
             "book_title": "Book Title",
             "author_name": "Last Name",
             "description": "Description",
+            "category": "Category"
           };
           // check required fields
           let requiredData = validateRequiredFields(data, requiredFields);

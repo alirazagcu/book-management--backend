@@ -19,6 +19,10 @@ const bookSchema = new Schema({
         type: String,
         default: 'default.jpeg'
     },
+    category: {
+        type: String,
+        required: true,
+    },
     description: {
         type: String,
         requires: true,

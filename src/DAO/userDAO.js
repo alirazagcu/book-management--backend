@@ -15,7 +15,7 @@ class UserDAO {
                 role: data.role
             });
             return {
-                email: newUser.email,
+                role: newUser.role,
                 token : await generateJWT(newUser._id, newUser.email, newUser.role)
             }
         }
@@ -30,6 +30,7 @@ class UserDAO {
         let password = user.password;
         if (data['password'] !== decrypt(password)) throwError(406, "Invalid Email or Password");
         return {
+            role: user.role,
             token: await generateJWT(user._id, user.email, user.role)
         }
     }

@@ -14,7 +14,8 @@ class BookDAO {
                 description: data['description'],
                 keyword: keyword,
                 image: file.originalname,
-                user: user._id
+                user: user._id,
+                category: data['category']
             })
             if (newBook) return "Book successfully added"
         } catch (e) {
@@ -28,6 +29,8 @@ class BookDAO {
             let query = null;
             if (data['field'] == 'title') query = Book.find({title: regex})
             else if (data['field'] == 'author') query = Book.find({author: regex})
+            else if (data['field'] == "category") query = Book.find({category: regex})
+            else if (data['field'] == "keyword") query = Book.find({keyword: regex})
             else query = Book.find({});
             const books = await query;
             return books;
