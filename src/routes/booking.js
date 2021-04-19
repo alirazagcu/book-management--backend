@@ -1,5 +1,5 @@
 const { authenticate, authorize } = require('../controllers/AuthController');
-const { createBooking, getAllBookingsByUser, getBooking, updateBookingStatus } = require('../controllers/BookingController');
+const { createBooking, getAllBookingsByUser, getBooking, updateBookingStatus } = require('../controllers/bookingController');
 
 const router = require('express').Router();
 
