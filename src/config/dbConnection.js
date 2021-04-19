@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/Books-management', {
+require('dotenv').config();
+const db_host = process.env.DB_HOST || 'mongodb://localhost:27017/Books-management';
+mongoose.connect( db_host, {
     useNewUrlParser : true,
     useCreateIndex : true,
     useUnifiedTopology: true,
