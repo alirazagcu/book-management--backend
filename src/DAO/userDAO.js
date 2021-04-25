@@ -6,7 +6,9 @@ class UserDAO {
 
     async registerUser(data){
         try{
-            if (data ['password'] !== data['confirm_password']) throwError(400, "password does not match")
+            if (data ['password'] !== data['confirm_password']) throwError(400, "password does not match");
+            let isEmailExist = await User.find({email: data['email']});
+            if (isEmailExist)  throwError(404, "Email already used");
             let newUser = await User.create({
                 first_name: capitalizeEachWord(data['first_name']),
                 last_name: capitalizeEachWord(data['last_name']),
