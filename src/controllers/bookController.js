@@ -2,6 +2,7 @@ const multer = require('multer')
 const requestValidator = require('../validators/bookValidator')
 const imageUpload= require('../config/imageUpload').single('image');
 const BookService = require('../services/bookService');
+const { throwError }= require('../utils/Common')
 const bookService = new BookService();
 
 module.exports = {

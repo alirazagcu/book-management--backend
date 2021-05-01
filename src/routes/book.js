@@ -3,7 +3,7 @@ const { addBook, searchByField, deleteBook, updateBookStatus, getAllBooksByUser 
 
 const router = require('express').Router();
 
-router.post('/addBook', authenticate, authorize("seller"), addBook);
+router.post('/addBook', authenticate, authorize("seller"),  addBook);
 
 router.post('/searchByField', authenticate, authorize("all"), searchByField);
 
