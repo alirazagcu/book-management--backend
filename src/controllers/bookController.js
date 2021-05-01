@@ -55,5 +55,15 @@ module.exports = {
         } catch (e) {
             next(e);
         }
+    },
+
+    getAllBooksByUser: async (req, res, next) => {
+        try {
+            requestValidator.getAllBooksByUser(req.body);
+            let response = await bookService.getAllBooksByUser(req.body);
+            return res.json({success: true, books: response})
+        } catch (e) {
+            next(e);
+        }
     }
 }

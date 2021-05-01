@@ -56,5 +56,15 @@ module.exports = {
       if (validationError.length > 0){
         throwError(400, "validationError", validationError)
       }
+    },
+
+    getAllBooksByUser: (data) => {
+      let requiredFields = {
+      };
+
+      let requiredData = validateRequiredFields(data, requiredFields);
+      if (requiredData.length > 0) {
+        throwError(400, "Required data input", requiredData);
+      }
     }
 }

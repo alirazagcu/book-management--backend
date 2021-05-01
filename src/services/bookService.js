@@ -16,6 +16,10 @@ class BookService {
     async updateBookStatus(data) {
         return await bookDAO.updateBookStatus(data);
     }
+
+    async getAllBooksByUser(data) {
+        return await bookDAO.getAllBooksByUser(data);
+    }
 }
 
 module.exports = BookService;

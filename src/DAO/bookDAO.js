@@ -58,6 +58,22 @@ class BookDAO {
         return;
     }
 
+    async getAllBooksByUser(data) {
+        const user = await User.findById(data._user.id);
+        if (!user) throwError(404, "User not found")
+        const books = await Book.find({user: data._user.id});
+        if (books.length > 0) {
+            return books.map(book => {
+                return { 
+                    id: book._id,
+                    book_name: book.title,
+                    author_name: book.author,
+                    status: book.status
+                }
+            })
+        }
+    }
+
     escapeRegex(text) {
         return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
     };
