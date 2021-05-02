@@ -1,5 +1,6 @@
 const Book = require('../models/bookModel');
 const User = require('../models/userModel');
+const Booking = require('../models/bookingModel');
 const AWS = require('aws-sdk');
 const { v4: uuidv4 } = require('uuid');
 const { throwError, capitalizeEachWord } = require('../utils/Common');
@@ -64,8 +65,9 @@ class BookDAO {
     async deleteBook(data) {
         const book = await Book.findOne({_id: data['book_id'], user: data._user.id});
         if (!book) throwError(404, "Book not found")
-        let doc = await Book.deleteOne({_id:book._id});
-        if(!doc) throwError(404, "Error while deleting book")
+        console.log(book._id)
+        const booking = await Booking.findOne({book_id: book._id});
+        await Promise.all([Book.deleteOne({_id:book._id}), Booking.deleteOne({_id: booking._id})])
         return;
     }
 
