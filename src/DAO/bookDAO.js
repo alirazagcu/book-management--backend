@@ -68,7 +68,7 @@ class BookDAO {
         if (!book) throwError(404, "Book not found")
         const booking = await Booking.findOne({book_id: book._id});
         if (booking && book) {
-         await Promise.all([Book.deleteOne({_id:book._id}), Booking.deleteOne({_id: booking._id}), Notification.findByIdAndDelete({booking_id:booking._id})])
+         await Promise.all([Book.deleteOne({_id:book._id}), Booking.deleteOne({_id: booking._id}), Notification.findOneAndDelete({booking_id:booking._id})])
         }
         else await Book.deleteOne({_id:book._id})
         return;
