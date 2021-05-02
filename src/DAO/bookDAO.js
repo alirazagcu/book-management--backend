@@ -65,9 +65,11 @@ class BookDAO {
     async deleteBook(data) {
         const book = await Book.findOne({_id: data['book_id'], user: data._user.id});
         if (!book) throwError(404, "Book not found")
-        console.log(book._id)
         const booking = await Booking.findOne({book_id: book._id});
-        await Promise.all([Book.deleteOne({_id:book._id}), Booking.deleteOne({_id: booking._id})])
+        if (booking && book) {
+         await Promise.all([Book.deleteOne({_id:book._id}), Booking.deleteOne({_id: booking._id})])
+        }
+        else await Booking.deleteOne({_id:book._id})
         return;
     }
 
