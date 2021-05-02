@@ -40,10 +40,11 @@ class BookingDAO {
         return  bookings.map(book => {
             return { 
                 id: book._id,
-                buyerName: book.buyer_id.first_name+ " "+ book.buyer_id.last_name,
-                number: book.number,
+                book_name: book.book_id.title,
+                buyer_name: book.buyer_id.first_name+ " "+ book.buyer_id.last_name,
+                phone_no: book.number,
                 address: book.address,
-                status: book.status
+                current_status: book.status
             }
         })
     }

@@ -46,6 +46,11 @@ bookingSchema.pre(/^find/, function(next){
       path : `buyer_id`,
       select : ['first_name', 'last_name']
   })
+  this.populate({
+    path : `book_id`,
+    select : ['title']
+})
   next()
   })
+
 module.exports = mongoose.model('Booking', bookingSchema);
