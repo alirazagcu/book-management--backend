@@ -66,10 +66,9 @@ class BookingDAO {
     async updateBookingStatus(data) {
         let user = await User.findById(data._user.id);
         if (!user) throwError(404, "User not found");
-        let booking = await Booking.findByIdAndUpdate(data['booking_id']);
-        if (!booking) throwError(404, "Booking not found");
-        await Booking.updateOne({status:data['status']});
+        let booking = await Booking.findByIdAndUpdate(data['booking_id'], {status: data['status']});
         await Book.findByIdAndUpdate(booking.book_id, {status: data['status']})
+        return "Successfully updated book"
     }
 }
 module.exports = BookingDAO;

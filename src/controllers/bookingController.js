@@ -38,7 +38,7 @@ module.exports = {
         try {
             requestValidator.updateBookingStatus(req.body);
             let response = await bookingService.updateBookingStatus(req.body);
-            return res.json({success: true, msg: "successfully update booking status"})
+            return res.json({success: true, msg: response})
         } catch (e) {
             next(e);
         }
