@@ -36,7 +36,12 @@ class BookingDAO {
     async getAllBookingsByUser(data) {
         let user = await User.findById(data._user.id);
         if (!user) throwError(404, "User not found");
-        const bookings = await Booking.find({seller_id: data._user.id}).where({status: 'booked'});    
+        let bookings= [];
+        if (data._user.role == 'buyer') {
+            bookings = await Booking.find({buyer_id: data._user.id}).where({status: 'booked'});    
+        }
+        else bookings = await Booking.find({seller_id: data._user.id}).where({status: 'booked'});
+        
         return  bookings.map(book => {
             return { 
                 id: book._id,
