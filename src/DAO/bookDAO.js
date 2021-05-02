@@ -1,6 +1,7 @@
 const Book = require('../models/bookModel');
 const User = require('../models/userModel');
 const Booking = require('../models/bookingModel');
+const Notification = require('../models/notificationModel');
 const AWS = require('aws-sdk');
 const { v4: uuidv4 } = require('uuid');
 const { throwError, capitalizeEachWord } = require('../utils/Common');
@@ -66,10 +67,11 @@ class BookDAO {
         const book = await Book.findOne({_id: data['book_id'], user: data._user.id});
         if (!book) throwError(404, "Book not found")
         const booking = await Booking.findOne({book_id: book._id});
+        const notification = await Notification.findOne({booking_id:booking._id});
         if (booking && book) {
-         await Promise.all([Book.deleteOne({_id:book._id}), Booking.deleteOne({_id: booking._id})])
+         await Promise.all([Book.deleteOne({_id:book._id}), Booking.deleteOne({_id: booking._id}), Notification.deleteOne({_id: notification._id})])
         }
-        else await Booking.deleteOne({_id:book._id})
+        else await Book.deleteOne({_id:book._id})
         return;
     }
 

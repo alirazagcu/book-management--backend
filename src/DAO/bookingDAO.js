@@ -1,6 +1,7 @@
 const Booking = require('../models/bookingModel');
 const Book = require('../models/bookModel');
 const User = require('../models/userModel');
+const Notification = require('../models/notificationModel');
 const { throwError } = require('../utils/Common')
 const NotificationDAO = require('../DAO/notificationDAO');
 const notificationDAO = new NotificationDAO();
@@ -41,7 +42,7 @@ class BookingDAO {
             bookings = await Booking.find({buyer_id: data._user.id}).where({status: 'booked'});    
         }
         else bookings = await Booking.find({seller_id: data._user.id}).where({status: 'booked'});
-        
+
         return  bookings.map(book => {
             return { 
                 id: book._id,
@@ -73,6 +74,7 @@ class BookingDAO {
         if (!user) throwError(404, "User not found");
         let booking = await Booking.findByIdAndUpdate(data['booking_id'], {status: data['status']});
         await Book.findByIdAndUpdate(booking.book_id, {status: data['status']})
+        await Notification.findOneAndUpdate({booking_id: booking._id}, {status: 'deactive'});
         return "Successfully updated book"
     }
 }
