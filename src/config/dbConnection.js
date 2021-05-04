@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const db_host = process.env.DB_HOST || 'mongodb://localhost:27017/Books-management';
-console.log(db_host)
-mongoose.connect( db_host, {
+const {DB_HOST} = require('./credentials')
+// const db_host = process.env.DB_HOST || 'mongodb://localhost:27017/Books-management';
+mongoose.connect( DB_HOST, {
     useNewUrlParser : true,
     useCreateIndex : true,
     useUnifiedTopology: true,
