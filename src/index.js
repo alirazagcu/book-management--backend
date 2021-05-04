@@ -1,5 +1,6 @@
 const express = require("express");
 const helmet = require("helmet");
+require('dotenv').config()
 const cors = require("cors");
 require('./config/dbConnection')
 const routes = require("./routes");
