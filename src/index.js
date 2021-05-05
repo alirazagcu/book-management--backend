@@ -7,7 +7,7 @@ const routes = require("./routes");
 const config = require('../src/config')[process.env.NODE_ENV || 'development'];
 const log = config.log();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 const app = express();
 
 // bodyparser setup
