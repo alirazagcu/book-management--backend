@@ -5,7 +5,7 @@ const router = require('express').Router();
 
 router.post('/addBook', authenticate, authorize("seller"),  addBook);
 
-router.post('/searchByField', authenticate, authorize("all"), searchByField);
+router.post('/searchByField', searchByField);
 
 router.post('/deleteBook', authenticate, authorize("seller"), deleteBook);
 
