@@ -25,12 +25,21 @@ const bookSchema = new Schema({
     },
     description: {
         type: String,
-        requires: true,
+        required: true,
         minLength:[10, 'A book description must have minimum 10 characters'],
         maxLength:[100, 'A book description must have less or  equal than 100 characters'],
         index: true
     },
     keyword: [String],
+    price: {
+        type: Number,
+        required: true,
+    },
+    condition: {
+        type: String,
+        enum: ["new", "old"],
+        required: true
+    },
     status: {
         type: String,
         enum: ["new", "booked", "sold"],
@@ -41,11 +50,6 @@ const bookSchema = new Schema({
         type: mongoose.Schema.ObjectId,
         ref: 'User',
         required: [true, 'Book must belong to seller']
-    },
-    status: {
-        type: String,
-        required: true,
-        default: 'new'
     }
 }, {
     timestamps: {

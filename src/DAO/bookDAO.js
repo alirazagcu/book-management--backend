@@ -36,8 +36,10 @@ class BookDAO {
                 description: data['description'],
                 keyword: keyword,
                 image: imageData.Location,
+                category: data['category'],
+                price: parseInt(data['book_price']),
+                condition: data['general_condition'],
                 user: user._id,
-                category: data['category']
             })
             if (newBook) return "Book successfully added"
         } catch (e) {
@@ -50,11 +52,20 @@ class BookDAO {
         const regex = new RegExp(this.escapeRegex(data['search']), 'gi');
         try {
             let query = null;
-            if (data['field'] == 'title') query = Book.find({title: regex}).where({status: 'new'})
-            else if (data['field'] == 'author') query = Book.find({author: regex}).where({status: 'new'})
-            else if (data['field'] == "category") query = Book.find({category: regex}).where({status: 'new'})
-            else if (data['field'] == "keyword") query = Book.find({keyword: regex}).where({status: 'new'})
-            else query = Book.find({}).where({status: 'new'});
+            if (data['book_condition']) {
+                if (data['field'] == 'title') query = Book.find({title: regex}).where({status: 'new', condition: data['book_condition']})
+                else if (data['field'] == 'author') query = Book.find({author: regex}).where({status: 'new', condition: data['book_condition']})
+                else if (data['field'] == "category") query = Book.find({category: regex}).where({status: 'new', condition: data['book_condition']})
+                else if (data['field'] == "keyword") query = Book.find({keyword: regex}).where({status: 'new', condition: data['book_condition']})
+                else query = Book.find({}).where({status: 'new', condition: data['book_condition']});
+            }
+            else {
+                if (data['field'] == 'title') query = Book.find({title: regex}).where({status: 'new'})
+                else if (data['field'] == 'author') query = Book.find({author: regex}).where({status: 'new'})
+                else if (data['field'] == "category") query = Book.find({category: regex}).where({status: 'new'})
+                else if (data['field'] == "keyword") query = Book.find({keyword: regex}).where({status: 'new'})
+                else query = Book.find({}).where({status: 'new'});
+            }
             const books = await query;
             return books;
             
