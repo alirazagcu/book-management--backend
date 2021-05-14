@@ -35,7 +35,6 @@ class UserDAO {
         return {
             role: user.role,
             userName: user.first_name,
-            test: "test",
             token: await generateJWT(user._id, user.email, user.role)
         }
     }
