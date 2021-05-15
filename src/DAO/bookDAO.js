@@ -99,7 +99,7 @@ class BookDAO {
         const user = await User.findById(data._user.id);
         if (!user) throwError(404, "User not found")
         // const books = await Book.find({user: data._user.id}).where({status: {$ne: "sold"}});
-        const books = await Book.find({user: data._user.id});
+        const books = await Book.find({user: data._user.id}).sort({'updated_at': -1});
         if (books.length > 0) {
             return books.map(book => {
                 return { 
