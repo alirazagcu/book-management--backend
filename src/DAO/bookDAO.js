@@ -107,7 +107,9 @@ class BookDAO {
                     book_name: book.title,
                     author_name: book.author,
                     book_price: book.price || 0,
-                    status: book.status
+                    status: book.status,
+                    updated_date: book.updated_at,
+                    created_date: book.created_at
                 }
             })
         }
